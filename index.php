@@ -1,40 +1,39 @@
 <?php
 
+require_once __DIR__ . '/constants.php';
+require_once __DIR__ . '/variables.php';
+require_once __DIR__ . '/getPlayers.php';
+require_once __DIR__ . '/buildBoard.php';
+require_once __DIR__ . '/isPositionCorrect.php';
+require_once __DIR__ . '/constants.php';
+require_once __DIR__ . '/constants.php';
+require_once __DIR__ . '/constants.php';
+require_once __DIR__ . '/constants.php';
+require_once __DIR__ . '/constants.php';
+require_once __DIR__ . '/constants.php';
+require_once __DIR__ . '/constants.php';
+
+
 do {
-    $playerOne = readline('Player 1 (X) - Digite o seu nome: ');
-    $playerTwo = readline('Player 2 (O) - Digite o seu nome: ');
+    $players= getPlayers();
 
-    $player = 'X';
+    $player = PLAYER_ONE_ICON;
 
-    $board = [
-        '.', '.', '.',
-        '.', '.', '.',
-        '.', '.', '.',
-    ];
+    $board = buildBoard();
 
     $winner = null;
 
     while ($winner === null) {
-        echo <<<EOL
-             Posições: | Tabuleiro
-                       |
-               0|1|2   |   $board[0]|$board[1]|$board[2]
-               3|4|5   |   $board[3]|$board[4]|$board[5]
-               6|7|8   |   $board[6]|$board[7]|$board[8]
-            EOL
-        ;
+        echo showBoard($board);
+
 
         $position = (int) readline("Player {$player}, digite a sua posição: ");
 
-        if (!in_array($position, [0, 1, 2, 3, 4, 5, 6, 7, 8])) {
-            echo "\nPosição inexistente, digite novamente.\n";
+        if(!isPositionCorrect($position, $board)){
             continue;
         }
 
-        if ($board[$position] !== '.') {
-            echo "\nPosição ocupada, digite novamente.\n";
-            continue;
-        }
+        
 
         $board[$position] = $player;
 
